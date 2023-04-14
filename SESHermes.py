@@ -8,14 +8,14 @@ def lambda_handler(event, context):
     
     emailData = event['Records'][0]["messageAttributes"]
     
-    SENDER = os.environ["emailSender"]
+    SENDER = emailData['fromName']['stringValue']
 
-    RECIPIENT = emailData['toEmail']
+    RECIPIENT = emailData['toEmail']['stringValue']
     
     print (emailData)
     
     if 'toCCEmail' in emailData:
-      CC_RECIPIENT = emailData['toCCEmail']
+      CC_RECIPIENT = emailData['toCCEmail']['stringValue']
       DESTINATION={
                         'ToAddresses': [
                             RECIPIENT,
@@ -35,9 +35,9 @@ def lambda_handler(event, context):
     
     AWS_REGION = "us-east-1"
     
-    SUBJECT = emailData['subject']
+    SUBJECT = emailData['subject']['stringValue']
     
-    BODY_HTML = emailData['body']        
+    BODY_HTML = emailData['body']['stringValue']    
     
     CHARSET = "UTF-8"
     
